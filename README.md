@@ -52,7 +52,7 @@ df = data.frame(fread(url))
 names(df) = c('variance', 'skewness', 'curtosis', 'entropy', 'class')
 ```
 
-Check size of dataframe:
+Check size of `df` dataframe:
 ```R
 nrow(df)
 ```
@@ -190,10 +190,10 @@ hist(df$entropy, main='Histogram of Entropy',
 ### Boxplots
 ```R
 par(mfrow=c(2,2))
-boxplot(df$variance, data = df, main='Boxplot. Variance', horizontal=TRUE)
-boxplot(df$skewness, data = df, main='Boxplot. Skewness', horizontal=TRUE)
-boxplot(df$curtosis, data = df, main='Boxplot. Curtosis', horizontal=TRUE)
-boxplot(df$entropy, data = df, main='Boxplot. Entropy', horizontal=TRUE)
+boxplot(df$variance, data=df, main='Boxplot. Variance', horizontal=TRUE)
+boxplot(df$skewness, data=df, main='Boxplot. Skewness', horizontal=TRUE)
+boxplot(df$curtosis, data=df, main='Boxplot. Curtosis', horizontal=TRUE)
+boxplot(df$entropy, data=df, main='Boxplot. Entropy', horizontal=TRUE)
 ```
 
 ![boxplots.png](img/boxplots.png)
@@ -219,10 +219,13 @@ findLinearCombos(select(df, -class))
 ```
 
 **Output**:
+```
+$linearCombos
+list()
 
-**$linearCombos**<br>
-**$remove**<br>
+$remove
 NULL
+```
 
 ## Highly Correlated Variables
 ```R
