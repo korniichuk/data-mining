@@ -218,14 +218,11 @@ nearZeroVar(select(df, -class), saveMetrics=TRUE)
 findLinearCombos(select(df, -class))
 ```
 
-<dl>
-	<dt>$linearCombos</dt>
-		<dd><ol>
-</ol>
-</dd>
-	<dt>$remove</dt>
-		<dd>NULL</dd>
-</dl>
+**Output**:
+
+**$linearCombos**<br>
+**$remove**<br>
+NULL
 
 ## Highly Correlated Variables
 ```R
