@@ -306,17 +306,14 @@ slices = percent_chart$percent
 lbls = c('N', 'Y')
 pct = round(slices/sum(slices)*100, 1)
 lbls = paste(lbls, pct) # add values of pct to labels
-lbls = paste(lbls,"%",sep='') # add % char to labels
-pie(slices, labels=lbls, radius=1, main="Pie Chart of Distribution",
+lbls = paste(lbls, '%', sep='') # add % char to labels
+pie(slices, labels=lbls, radius=1, main='Pie Chart of Distribution',
     clockwise=TRUE)
 ```
 
 ![pie_chart.png](img/pie_chart.png)
 
 ```R
-png(filename='feature_plot.png')
-featurePlot(x=select(df, -class), y=df$class, plot='box')
-dev.off()
 featurePlot(x=select(df, -class), y=df$class, plot='box')
 ```
 
@@ -395,7 +392,7 @@ The final values used for the model were sigma = 0.8345372 and C = 1.
 
 ### KNN
 ```R
-mod_knn = train(class ~. , data=data_train, trControl=valid_par, method="knn")
+mod_knn = train(class ~. , data=data_train, trControl=valid_par, method='knn')
 mod_knn
 ```
 
@@ -451,9 +448,6 @@ KNN 0.9157941 0.9372235 0.9476255 0.9529962 0.9684487 0.9894575    0
 
 ### SVM vs KNN
 ```R
-png(filename='svm_vs_knn.png')
-bwplot(mod_results, scales=list(x=list(relation='free'), y=list(relation='free')))
-dev.off()
 bwplot(mod_results, scales=list(x=list(relation='free'), y=list(relation='free')))
 ```
 
@@ -501,9 +495,9 @@ Prediction   N   Y
 
        'Positive' Class : N
 
-    [1] KNN:
+[1] KNN:
 
-    Confusion Matrix and Statistics
+Confusion Matrix and Statistics
 
           Reference
 Prediction   N   Y
