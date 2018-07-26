@@ -60,7 +60,7 @@ str(df)
  $ class   : int  0 0 0 0 0 0 0 0 0 0 ...
 ```
 
-Widzimy na wyniku powyżej, że zbiór zawiera 1372 wierszy oraz 5 kolumn. R poprawnie rozpoznał typy danych: 'int' dla kolumny 'class' (znaczenia 1 lub 0) oraz 'num' dla pozostałych.
+Widzimy na wyniku powyżej, że zbiór zawiera 1372 wierszy oraz 5 kolumn. R poprawnie rozpoznał typy danych: `int` dla kolumny `class` (znaczenia 1 lub 0) oraz `num` dla pozostałych.
 
 Wyświetlimy pierwsze pięć wierszy:
 ```r
@@ -113,7 +113,7 @@ cor(df)
 </tbody>
 </table>
 
-Sprawdzanie korelacji w postaci tablicy powyżej. Ogólnie tablica musi mieć jedynki tylko po przekątnej, bo przykładowo wariacja koreluje z wariancją jako jeden do jednego. Jedynka nie po przekątnej wskazuję na duplikację danych (ang. duplicity), czyli mamy te same danych w różnych kolumnach. Uwagi potrzebują też znaczenia zbliżone do jedynki. W naszym przypadku to korelacja kurtozy (ang. curtosis) do współczynnika skośności (ang. skewness). Prawdopodobnie kolumnę `skewness` trzeba będzie usunąć, jednak sprawdzimy to później bardziej szczegółowo. Również ciekawy jest wynik -0.72484314 jako korelacja klasy (ang. class) do wariacji (ang. variance). Tu zalecane będzie budowanie drzewa decyzyjnego.
+Sprawdzanie korelacji w postaci tablicy powyżej. Ogólnie tablica musi mieć jedynki tylko po przekątnej, bo przykładowo wariacja koreluje z wariancją jako jeden do jednego. Jedynka nie po przekątnej wskazuję na duplikację danych (ang. duplicity), czyli mamy te same danych w różnych kolumnach. Uwagi potrzebują też znaczenia zbliżone do jedynki. W naszym przypadku to korelacja współczynnika skośności (ang. skewness) do kurtozy (ang. curtosis). Prawdopodobnie kolumnę `skewness` trzeba będzie usunąć, jednak sprawdzimy to później bardziej szczegółowo. Również ciekawy jest wynik `-0.72484314` jako korelacja klasy (ang. class) do wariacji (ang. variance). Tu zalecane będzie budowanie drzewa decyzyjnego.
 
 Identyfikacji silnie skorelowanych zmiennych. Wyświetlimy wykres ze współczynnikiem korelacji dla atrybutów:
 ```r
@@ -122,7 +122,7 @@ chart.Correlation(select(df, -class), histogram=T)
 
 ![correlation.png](img/correlation.png)
 
-Zrobimy podsumowanie poziomu współczynnika korelacji:
+Wykres powyżej potwierdza wysokie znaczenie korelacji kolumny `skewness`: `-0.79`. Zanim usuniemy kolumnę `skewness`, zrobimy podsumowanie poziomu współczynnika korelacji:
 ```r
 df$class = ifelse(df$class=='1', 'Y', 'N')
 df2 = select(df, -class)
@@ -136,7 +136,7 @@ summary(cor_matrix[upper.tri(cor_matrix)])
 -0.78690 -0.48995 -0.05841 -0.13906  0.27362  0.31884
 ```
 
-Sprawdzimy atrybuty zmiennych ze współczynnikiem korelacji powyżej 0,75. Skorzystamy z funkcji `findCorrelation()`:
+Między atrybutami występuje korelacja ujemna. Znaczenie: `-0.78690`. Sprawdzimy atrybuty zmiennych ze współczynnikiem korelacji powyżej `0,75`. Skorzystamy z funkcji `findCorrelation()`:
 ```r
 names(df[findCorrelation(cor_matrix, cutoff = 0.75)])
 ```
@@ -147,7 +147,7 @@ names(df[findCorrelation(cor_matrix, cutoff = 0.75)])
 ```
 
 Usuniemy kolumnę `skewness` i ponownie zrobimy podsumowanie poziomu współczynnika korelacji:
-```
+```r
 df2 = select(df2, -skewness)
 cor_matrix = cor(df2)
 summary(cor_matrix[upper.tri(cor_matrix)])
@@ -159,6 +159,8 @@ df = cbind.data.frame(df2, class = df$class) # dodamy `class`
     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
 -0.38085 -0.05202  0.27682  0.07160  0.29783  0.31884
 ```
+
+Wszystko w porządku. Przejdziemy [do wizualizacji atrybutów](#wizualizacja-atrybutów).
 
 ## Wizualizacja atrybutów
 Skorzystamy z funkcji `featurePlot`:
@@ -201,7 +203,7 @@ NULL
 
 ## Dystrybucja
 Wyświetlimy dystrybucję:
-```
+```r
 df2 = data.frame(table(df$class))
 names(df2) = c('class', 'freq')
 cbind(df2, percent=round((df2$freq/sum(df2$freq))*100, 1))
