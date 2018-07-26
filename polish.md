@@ -81,7 +81,7 @@ Max.   : 6.8248   Max.   : 12.952   Max.   :17.9274   Max.   : 2.4495
 ```
 
 ## Korelacja
-Dla analizy skorzystamy z funkcji `cor()`
+Dla analizy skorzystamy z funkcji `cor()`:
 ```r
 cor(df)
 ```
@@ -179,3 +179,19 @@ list()
 $remove
 NULL
 ```
+
+## Dystrybucja
+Wyświetlimy dystrybucję:
+```
+df2 = data.frame(table(df$class))
+names(df2) = c('class', 'freq')
+cbind(df2, percent=round((df2$freq/sum(df2$freq))*100, 1))
+```
+
+<table>
+<thead><tr><th scope=col>class</th><th scope=col>freq</th><th scope=col>percent</th></tr></thead>
+<tbody>
+	<tr><td>N   </td><td>762 </td><td>55.5</td></tr>
+	<tr><td>Y   </td><td>610 </td><td>44.5</td></tr>
+</tbody>
+</table>
