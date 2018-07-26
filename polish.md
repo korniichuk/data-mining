@@ -170,6 +170,8 @@ featurePlot(x=select(df, -class), y=df$class, plot='box')
 
 ![feature_plot.png](img/feature_plot.png)
 
+Ogólnie przygotowanie atrybutów oraz obserwacji wykonano dobrze. Jedynej uwagi zasługuje tylko kolumna `curtosis` i wyłączne dane przygotowane dla prawdziwych banknot (zobacz wykres powyżej).
+
 ## Wariacja
 Sprawdzimy atrybuty z wariacją bliską zera. Skorzystamy z funkcji `nearZeroVar()`:
 ```r
@@ -185,6 +187,8 @@ nearZeroVar(select(df, -class), saveMetrics=T)
 	<tr><th scope=row>entropy</th><td>1.00    </td><td>84.25656</td><td>FALSE   </td><td>FALSE   </td></tr>
 </tbody>
 </table>
+
+Wszystko w porządku. Funkcja zwróciła `FALSE` dla wszystkich atrybutów.
 
 ## Kombinacja liniowa
 Sprawdzimy zaleznosci liniowe miedzy atrybutami:
