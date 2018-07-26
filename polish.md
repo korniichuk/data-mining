@@ -234,9 +234,13 @@ prp(rtree_set)
 
 ![decision_tree.png](img/decision_tree.png)
 
+Właśnie to, co zauważyliśmy jeszcze podczas sprawdzania korelacji. Na samej górze drzewa jest zmian `variance`, która dobrze koreluje z klasą (ang. class). Można zapisać reguły, które będą dobrze działały (zobacz powyżej). Skala problemu nie jest zbyt duża, by go manualnie rozwiązać. Uczenie maszynowe (ang. machine learning) nie będzie lepsze od klasycznego rozwiązania.
+
 Teraz wyświtlimy drzewo decyzyjne oraz szczegóły dodatkowe:
 ```r
 rpart.plot(rtree_set)
 ```
 
 ![decision_tree_detailed.png](img/decision_tree_detailed.png)
+
+Drzewo w takiej postaci odzwierciedla, w jaki sposób na podstawie atrybutów były podejmowane decyzje klasyfikujące. Zaletą tej reprezentacji jest jej czytelność dla człowieka. W prosty sposób można przekształcić ją do reprezentacji regułowej.
