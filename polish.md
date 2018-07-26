@@ -5,7 +5,7 @@ Charakterystyka: | Rozmiar: | Ilość atrybutów: | Charakterystyka atrybutów: 
 --- | --- | --- | --- | ---
 wielowymiarowe | 5 x 1372 | 5 | liczby rzeczywiste | klasyfikacja (ang. classification)
 
-Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do digitalizacji użyto kamery przemysłowej zwykle używanej do kontroli wydruku. Zdjęcia mają rozmiar 400 x 400 pikseli, są w skali szarości o rozdzielczości około 660 dpi. Narzędzie Wavelet Transform zostało użyte do wydobycia atrybutów ze zdjęć.
+Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do digitalizacji użyto kamery przemysłowej zwykle używanej do kontroli wydruku. Zdjęcia mają rozmiar 400 x 400 pikseli, są w skali szarości o rozdzielczości około 660 dpi. Narzędzie Wavelet Transform zostało użyte do wydobycia danych ze zdjęć.
 
 **Atrybuty**:
 1. wariancja (ang. variance),
@@ -18,7 +18,7 @@ Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do dig
 
 ## Statystyki ogólne
 Ładowanie pakietów:
-```R
+```r
 library(caret)
 library(data.table)
 library(dplyr)
@@ -27,14 +27,14 @@ library(rpart.plot)
 ```
 
 Ładowanie zbioru danych:
-```R
+```r
 url = 'http://bit.ly/banknote-auth'
 df = data.frame(fread(url))
 names(df) = c('variance', 'skewness', 'curtosis', 'entropy', 'class')
 ```
 
 Sprawdzimy strukturę danych:
-```R
+```r
 str(df)
 ```
 
@@ -49,7 +49,7 @@ Wynik:
 ```
 
 Wyświetlimy pierwsze pięć wierszy:
-```R
+```r
 head(df, 5)
 ```
 
@@ -61,5 +61,66 @@ head(df, 5)
 	<tr><td>3.86600 </td><td>-2.6383 </td><td> 1.9242 </td><td> 0.10645</td><td>0       </td></tr>
 	<tr><td>3.45660 </td><td> 9.5228 </td><td>-4.0112 </td><td>-3.59440</td><td>0       </td></tr>
 	<tr><td>0.32924 </td><td>-4.4552 </td><td> 4.5718 </td><td>-0.98880</td><td>0       </td></tr>
+</tbody>
+</table>
+
+Wyświetlimy statystyki podsumowujące (ang. summary statistics):
+```r
+summary(select(df, -class))
+```
+
+Wynik:
+```
+   variance          skewness          curtosis          entropy
+Min.   :-7.0421   Min.   :-13.773   Min.   :-5.2861   Min.   :-8.5482
+1st Qu.:-1.7730   1st Qu.: -1.708   1st Qu.:-1.5750   1st Qu.:-2.4135
+Median : 0.4962   Median :  2.320   Median : 0.6166   Median :-0.5867
+Mean   : 0.4337   Mean   :  1.922   Mean   : 1.3976   Mean   :-1.1917
+3rd Qu.: 2.8215   3rd Qu.:  6.815   3rd Qu.: 3.1793   3rd Qu.: 0.3948
+Max.   : 6.8248   Max.   : 12.952   Max.   :17.9274   Max.   : 2.4495
+```
+
+Korelacja:
+```r
+cor(df)
+```
+
+<table>
+<thead><tr><th></th><th scope=col>variance</th><th scope=col>skewness</th><th scope=col>curtosis</th><th scope=col>entropy</th><th scope=col>class</th></tr></thead>
+<tbody>
+	<tr><th scope=row>variance</th><td> 1.0000000 </td><td> 0.2640255 </td><td>-0.3808500 </td><td> 0.27681670</td><td>-0.72484314</td></tr>
+	<tr><th scope=row>skewness</th><td> 0.2640255 </td><td> 1.0000000 </td><td>-0.7868952 </td><td>-0.52632084</td><td>-0.44468776</td></tr>
+	<tr><th scope=row>curtosis</th><td>-0.3808500 </td><td>-0.7868952 </td><td> 1.0000000 </td><td> 0.31884089</td><td> 0.15588324</td></tr>
+	<tr><th scope=row>entropy</th><td> 0.2768167 </td><td>-0.5263208 </td><td> 0.3188409 </td><td> 1.00000000</td><td>-0.02342368</td></tr>
+	<tr><th scope=row>class</th><td>-0.7248431 </td><td>-0.4446878 </td><td> 0.1558832 </td><td>-0.02342368</td><td> 1.00000000</td></tr>
+</tbody>
+</table>
+
+Identyfikacji silnie skorelowanych zmiennych. Wyświetlimy wykres ze współczynnikiem korelacji dla atrybutów:
+```r
+chart.Correlation(select(df, -class), histogram=T)
+```
+
+![correlation.png](img/correlation.png)
+
+## Analiza wykresów
+```r
+featurePlot(x=select(df, -class), y=df$class, plot='box')
+```
+
+![feature_plot.png](img/feature_plot.png)
+
+Sprawdzimy atrybuty z wariacją bliską zera. Skorzystamy z funkcji `nearZeroVar`:
+```r
+nearZeroVar(select(df, -class), saveMetrics=T)
+```
+
+<table>
+<thead><tr><th></th><th scope=col>freqRatio</th><th scope=col>percentUnique</th><th scope=col>zeroVar</th><th scope=col>nzv</th></tr></thead>
+<tbody>
+	<tr><th scope=row>variance</th><td>1.25    </td><td>97.52187</td><td>FALSE   </td><td>FALSE   </td></tr>
+	<tr><th scope=row>skewness</th><td>1.20    </td><td>91.54519</td><td>FALSE   </td><td>FALSE   </td></tr>
+	<tr><th scope=row>curtosis</th><td>1.00    </td><td>92.56560</td><td>FALSE   </td><td>FALSE   </td></tr>
+	<tr><th scope=row>entropy</th><td>1.00    </td><td>84.25656</td><td>FALSE   </td><td>FALSE   </td></tr>
 </tbody>
 </table>
