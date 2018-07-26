@@ -5,7 +5,7 @@ Charakterystyka: | Rozmiar: | Ilość atrybutów: | Charakterystyka atrybutów: 
 --- | --- | --- | --- | ---
 wielowymiarowe | 5 x 1372 | 5 | liczby rzeczywiste | klasyfikacja (ang. classification)
 
-Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do digitalizacji użyto kamery przemysłowej zwykle używanej do kontroli wydruku. Zdjęcia mają rozmiar 400 x 400 pikseli, są w skali szarości o rozdzielczości około 660 dpi. Narzędzie Wavelet Transform zostało użyte do wydobycia danych ze zdjęć.
+Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do digitalizacji użyto kamery przemysłowej zwykle używanej do kontroli wydruku. Zdjęcia mają rozmiar 400 x 400 pikseli, są w skali szarości o rozdzielczości około 660 dpi. Narzędzie `Wavelet Transform` zostało użyte do wydobycia danych ze zdjęć.
 
 **Atrybuty**:
 1. wariancja (ang. variance),
@@ -38,7 +38,7 @@ Sprawdzimy strukturę danych:
 str(df)
 ```
 
-Wynik:
+**Wynik**:
 ```
 'data.frame':	1372 obs. of  5 variables:
  $ variance: num  3.622 4.546 3.866 3.457 0.329 ...
@@ -69,7 +69,7 @@ Wyświetlimy statystyki podsumowujące (ang. summary statistics):
 summary(select(df, -class))
 ```
 
-Wynik:
+**Wynik**:
 ```
    variance          skewness          curtosis          entropy
 Min.   :-7.0421   Min.   :-13.773   Min.   :-5.2861   Min.   :-8.5482
@@ -80,7 +80,8 @@ Mean   : 0.4337   Mean   :  1.922   Mean   : 1.3976   Mean   :-1.1917
 Max.   : 6.8248   Max.   : 12.952   Max.   :17.9274   Max.   : 2.4495
 ```
 
-Korelacja:
+## Korelacja
+Dla analizy skorzystamy z funkcji `cor()`
 ```r
 cor(df)
 ```
@@ -103,14 +104,53 @@ chart.Correlation(select(df, -class), histogram=T)
 
 ![correlation.png](img/correlation.png)
 
-## Analiza wykresów
+Zrobimy podsumowanie poziomu współczynnika korelacji:
+```r
+df$class = ifelse(df$class=='1', 'Y', 'N')
+df2 = select(df, -class)
+cor_matrix = cor(df2)
+summary(cor_matrix[upper.tri(cor_matrix)])
+```
+
+**Wynik**:
+```
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
+-0.78690 -0.48995 -0.05841 -0.13906  0.27362  0.31884
+```
+
+Sprawdzimy atrybuty zmiennych ze współczynnikiem korelacji powyżej 0,75. Skorzystamy z funkcji `findCorrelation()`:
+```r
+names(df[findCorrelation(cor_matrix, cutoff = 0.75)])
+```
+
+**Wynik**:
+```
+'skewness'
+```
+
+Usuniemy kolumnę `skewness` i ponownie zrobimy podsumowanie poziomu współczynnika korelacji:
+```
+df2 = select(df2, -skewness)
+cor_matrix = cor(df2)
+summary(cor_matrix[upper.tri(cor_matrix)])
+df = cbind.data.frame(df2, class = df$class) # dodamy `class`
+```
+
+**Wynik**:
+```
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
+-0.38085 -0.05202  0.27682  0.07160  0.29783  0.31884
+```
+
+## Wizualizacja danych
 ```r
 featurePlot(x=select(df, -class), y=df$class, plot='box')
 ```
 
 ![feature_plot.png](img/feature_plot.png)
 
-Sprawdzimy atrybuty z wariacją bliską zera. Skorzystamy z funkcji `nearZeroVar`:
+## Wariacja
+Sprawdzimy atrybuty z wariacją bliską zera. Skorzystamy z funkcji `nearZeroVar()`:
 ```r
 nearZeroVar(select(df, -class), saveMetrics=T)
 ```
@@ -124,3 +164,18 @@ nearZeroVar(select(df, -class), saveMetrics=T)
 	<tr><th scope=row>entropy</th><td>1.00    </td><td>84.25656</td><td>FALSE   </td><td>FALSE   </td></tr>
 </tbody>
 </table>
+
+## Kombinacja liniowa
+Sprawdzimy zaleznosci liniowe miedzy atrybutami:
+```r
+findLinearCombos(select(df, -class))
+```
+
+**Wynik**:
+```
+$linearCombos
+list()
+
+$remove
+NULL
+```
