@@ -17,6 +17,8 @@ wielowymiarowe | 5 x 1372 | 5 | liczby rzeczywiste | klasyfikacja (ang. classifi
 
 Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do digitalizacji użyto kamery przemysłowej zwykle używanej do kontroli wydruku. Zdjęcia mają rozmiar 400 x 400 pikseli, są w skali szarości o rozdzielczości około 660 dpi. Narzędzie `Wavelet Transform` zostało użyte do wydobycia danych ze zdjęć.
 
+**Źródło**: https://archive.ics.uci.edu/ml/datasets/banknote+authentication
+
 **Atrybuty**:
 1. wariancja (ang. variance),
 2. współczynnik skośności (ang. skewness),
@@ -24,7 +26,7 @@ Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do dig
 4. entropia (ang. entropy),
 5. klasa (ang. class).
 
-**Źródło**: https://archive.ics.uci.edu/ml/datasets/banknote+authentication
+Mamy dla analizy zbiór danych, który zawiera 5 kolumn oraz 1372 wierszy. Pierwsze cztery kolumny zawierają  dane wydobyte ze zdjęć. Ostatnia piąta kolumna wskazuje czy banknot są oryginalna. Gdzie `1` -- oryginał, `0` -- podróbka. Dane są liczby rzeczywistymi.
 
 ## Statystyki ogólne
 Ładowanie pakietów:
