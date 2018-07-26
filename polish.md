@@ -1,5 +1,15 @@
 # Eksploracja Danych w R
 
+## Spis treści
+* **[Przegląd danych](#przegląd-danych)**
+* **[Statystyki ogólne](#statystyki-ogólne)**
+* **[Korelacja](#korelacja)**
+* **[Wizualizacja atrybutów](#wizualizacja-atrybutów)**
+* **[Wariacja](#wariacja)**
+* **[Kombinacja liniowa](#kombinacja-liniowa)**
+* **[Dystrybucja](#dystrybucja)**
+* **[Drzewo decyzyjne](#drzewo-decyzyjne)**
+
 ## Przegląd danych
 Charakterystyka: | Rozmiar: | Ilość atrybutów: | Charakterystyka atrybutów: | Powiązane zadania:
 --- | --- | --- | --- | ---
@@ -196,3 +206,19 @@ cbind(df2, percent=round((df2$freq/sum(df2$freq))*100, 1))
 	<tr><td>Y   </td><td>610 </td><td>44.5</td></tr>
 </tbody>
 </table>
+
+## Drzewo decyzyjne
+Wyświtlimy drzewo decyzyjne:
+```r
+rtree_set = rpart(class ~., df)
+prp(rtree_set)
+```
+
+![decision_tree.png](img/decision_tree.png)
+
+Teraz wyświtlimy drzewo decyzyjne oraz szczegóły dodatkowe:
+```r
+rpart.plot(rtree_set)
+```
+
+![decision_tree_detailed.png](img/decision_tree_detailed.png)
