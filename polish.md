@@ -205,6 +205,8 @@ $remove
 NULL
 ```
 
+Wszystko w porządku. Funkcja zwróciła `NULL. Przejdziemy [do dystrybucji](#dystrybucja).
+
 ## Dystrybucja
 Wyświetlimy dystrybucję:
 ```r
@@ -220,6 +222,8 @@ cbind(df2, percent=round((df2$freq/sum(df2$freq))*100, 1))
 	<tr><td>Y   </td><td>610 </td><td>44.5</td></tr>
 </tbody>
 </table>
+
+Wszystko w porządku (zobacz tabelę powyżej). Prawie 50% do 50%. Czyli zbiór zawiera oryginalne banknoty oraz podróbki w dobrej proporcji.
 
 ## Drzewo decyzyjne
 Wyświtlimy drzewo decyzyjne:
