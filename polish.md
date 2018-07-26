@@ -113,6 +113,8 @@ cor(df)
 </tbody>
 </table>
 
+Sprawdzanie korelacji w postaci tablicy powyżej. Ogólnie tablica musi mieć jedynki tylko po przekątnej, bo przykładowo wariacja koreluje z wariancją jako jeden do jednego. Jedynka nie po przekątnej wskazuję na duplikację danych (ang. duplicity), czyli mamy te same danych w różnych kolumnach. Uwagi potrzebują też znaczenia zbliżone do jedynki. W naszym przypadku to korelacja kurtozy (ang. curtosis) do współczynnika skośności (ang. skewness). Prawdopodobnie kolumnę `skewness` trzeba będzie usunąć, jednak sprawdzimy to później bardziej szczegółowo. Również ciekawy jest wynik -0.72484314 jako korelacja klasy (ang. class) do wariacji (ang. variance). Tu zalecane będzie budowanie drzewa decyzyjnego.
+
 Identyfikacji silnie skorelowanych zmiennych. Wyświetlimy wykres ze współczynnikiem korelacji dla atrybutów:
 ```r
 chart.Correlation(select(df, -class), histogram=T)
