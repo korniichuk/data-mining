@@ -17,8 +17,6 @@ wielowymiarowe | 5 x 1372 | 5 | liczby rzeczywiste | klasyfikacja (ang. classifi
 
 Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do digitalizacji użyto kamery przemysłowej zwykle używanej do kontroli wydruku. Zdjęcia mają rozmiar 400 x 400 pikseli, są w skali szarości o rozdzielczości około 660 dpi. Narzędzie `Wavelet Transform` zostało użyte do wydobycia danych ze zdjęć.
 
-**Źródło**: https://archive.ics.uci.edu/ml/datasets/banknote+authentication
-
 **Atrybuty**:
 1. wariancja (ang. variance),
 2. współczynnik skośności (ang. skewness),
@@ -27,6 +25,8 @@ Dane zostały wydobyte ze zdjęć oryginalnych i podrobionych banknotów. Do dig
 5. klasa (ang. class).
 
 Mamy dla analizy zbiór danych, który zawiera 5 kolumn oraz 1372 wierszy. Pierwsze cztery kolumny zawierają  dane wydobyte ze zdjęć. Ostatnia piąta kolumna wskazuje czy banknot są oryginalna. Gdzie `1` -- oryginał, `0` -- podróbka. Dane są liczby rzeczywistymi.
+
+**Źródło**: https://archive.ics.uci.edu/ml/datasets/banknote+authentication
 
 ## Statystyki ogólne
 Ładowanie pakietów:
@@ -60,6 +60,8 @@ str(df)
  $ class   : int  0 0 0 0 0 0 0 0 0 0 ...
 ```
 
+Widzimy na wyniku powyżej, że zbiór zawiera 1372 wierszy oraz 5 kolumn. R poprawnie rozpoznał typy danych: 'int' dla kolumny 'class' (znaczenia 1 lub 0) oraz 'num' dla pozostałych.
+
 Wyświetlimy pierwsze pięć wierszy:
 ```r
 head(df, 5)
@@ -91,6 +93,8 @@ Mean   : 0.4337   Mean   :  1.922   Mean   : 1.3976   Mean   :-1.1917
 3rd Qu.: 2.8215   3rd Qu.:  6.815   3rd Qu.: 3.1793   3rd Qu.: 0.3948
 Max.   : 6.8248   Max.   : 12.952   Max.   :17.9274   Max.   : 2.4495
 ```
+
+Na wyniku powyżej można sprawdzić minimalne i maksymalne znaczenia, medianę oraz średnią arytmetyczną dla każdego atrybutu.
 
 ## Korelacja
 Dla analizy skorzystamy z funkcji `cor()`:
