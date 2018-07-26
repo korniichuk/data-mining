@@ -142,7 +142,8 @@ df = cbind.data.frame(df2, class = df$class) # dodamy `class`
 -0.38085 -0.05202  0.27682  0.07160  0.29783  0.31884
 ```
 
-## Wizualizacja danych
+## Wizualizacja atrybutów
+Skorzystamy z funkcji `featurePlot`:
 ```r
 featurePlot(x=select(df, -class), y=df$class, plot='box')
 ```
